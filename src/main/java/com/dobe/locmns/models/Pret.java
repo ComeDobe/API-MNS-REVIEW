@@ -28,5 +28,8 @@ public class Pret extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "Id_Utilisateur")
     private Utilisateur utilisateur;
+    @ManyToOne
+    @JoinColumn(name = "Id_Materiel")
+    private Materiel materiel;
     private boolean prolongationValide;
 }

@@ -21,6 +21,7 @@ public class Pannes extends AbstractEntity{
     private String description;
     private String imageUrl;
     @ManyToOne
+    @JoinColumn(name = "Id_Materiel")
     private Materiel materiel;
 
 }
