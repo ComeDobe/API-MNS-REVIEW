@@ -3,6 +3,7 @@ package com.dobe.locmns.dto;
 import com.dobe.locmns.models.Localisation;
 import com.dobe.locmns.models.Materiel;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,10 +17,15 @@ public class MaterielDto {
 
 
     private Integer id;
+    @NotBlank(message = "La marque ne peut pas etre vide")
     private String marque;
+    @NotBlank(message = "La reference ne peut pas etre vide")
     private String reference;
+    @NotBlank(message = "La description ne peut pas etre vide")
     private String description;
+    @NotBlank(message = "La quantite ne peut pas etre vide")
     private Integer quantite;
+    @NotBlank(message = "La localisation ne peut pas etre vide")
     private Localisation localisation;
 
     public static MaterielDto fromEntity(Materiel materiel) {

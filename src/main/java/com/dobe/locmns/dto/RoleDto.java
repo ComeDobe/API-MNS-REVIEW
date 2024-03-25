@@ -1,6 +1,7 @@
 package com.dobe.locmns.dto;
 
 import com.dobe.locmns.models.Role;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,9 @@ import lombok.Setter;
 public class RoleDto {
 
     private Integer id;
+    @NotBlank(message = "Le roleName ne peut pas etre vide")
     private String roleName;
+    @NotBlank(message = "La description ne peut pas etre vide")
     private String roleDescription;
 
     public static RoleDto fromEntity(Role role) {
