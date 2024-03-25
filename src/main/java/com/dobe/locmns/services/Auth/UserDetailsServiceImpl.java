@@ -1,4 +1,4 @@
-package com.dobe.locmns.services;
+package com.dobe.locmns.services.Auth;
 
 import com.dobe.locmns.repositories.UtilisateurRepository;
 import jakarta.persistence.EntityNotFoundException;

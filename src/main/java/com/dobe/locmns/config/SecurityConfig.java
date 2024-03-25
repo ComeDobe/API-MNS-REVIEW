@@ -45,7 +45,6 @@ public class SecurityConfig {
                                                 "/**/register",
                                                 "/api/access/**",
                                                 "/h2-console/**",
-                                                // resources for swagger to work properly
                                                 "/v2/api-docs",
                                                 "/v3/api-docs",
                                                 "/v3/api-docs/**",
