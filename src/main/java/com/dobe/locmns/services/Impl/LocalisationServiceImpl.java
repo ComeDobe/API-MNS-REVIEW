@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LocalisationServiceImpl implements LocalisationService {
     private final LocalisationRepository localisationRepository;
-    private ObjectsValidator<LocalisationDto> validator;
+    private final ObjectsValidator<LocalisationDto> validator;
 
 
     @Override
