@@ -6,6 +6,7 @@ import com.dobe.locmns.dto.UtilisateurDto;
 import com.dobe.locmns.repositories.UtilisateurRepository;
 import com.dobe.locmns.services.UtilisateurService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,7 @@ public class UtilisateurController {
 
     private final UtilisateurService utilisateurService;
     private final UtilisateurRepository utilisateurRepository;
+
 
     @PostMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

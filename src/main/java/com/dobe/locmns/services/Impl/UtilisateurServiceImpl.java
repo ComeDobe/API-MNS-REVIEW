@@ -17,10 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -162,4 +159,5 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             return roleRepository.save(newRole);
         }
     }
-    }
+
+}

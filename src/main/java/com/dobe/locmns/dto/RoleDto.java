@@ -26,14 +26,15 @@ public class RoleDto {
                 .roleDescription(role.getRoleDescription())
                 .build();
     }
-    public static Role toEntity(RoleDto role) {
-        return Role.builder()
-                .id(role.getId())
-                .roleName(role.getRoleName())
-                .roleDescription(role.getRoleDescription())
-                .build();
+    public static Role toEntity(RoleDto roleDto) {
+        Role.RoleBuilder roleBuilder = Role.builder()
+                .roleName(roleDto.getRoleName())
+                .roleDescription(roleDto.getRoleDescription());
 
+        if (roleDto.getId() != null) {
+            roleBuilder.id(roleDto.getId());
+        }
+
+        return roleBuilder.build();
     }
-
-
 }
