@@ -1,4 +1,4 @@
-package com.dobe.locmns.services.Impl;
+package com.dobe.locmns.services.Auth;
 
 import com.dobe.locmns.models.Role;
 import com.dobe.locmns.models.Utilisateur;
@@ -38,6 +38,8 @@ public class InitialisationServiceImpl {
             utilisateur.setFirstName(firstName);
             utilisateur.setLastName(lastName);
             utilisateur.setEmail(email);
+            utilisateur.setActive(true);
+            utilisateur.setAdmin(true);
             utilisateur.setPassword(passwordEncoder.encode(password));
             utilisateur.setRole(roles);
             utilisateurRepository.save(utilisateur);

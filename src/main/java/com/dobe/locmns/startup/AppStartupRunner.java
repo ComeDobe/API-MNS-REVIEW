@@ -1,6 +1,6 @@
 package com.dobe.locmns.startup;
 
-import com.dobe.locmns.services.Impl.InitialisationServiceImpl;
+import com.dobe.locmns.services.Auth.InitialisationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
