@@ -26,10 +26,10 @@ public class Utilisateur extends AbstractEntity implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Utilisateur")
     private Integer id;
-    @Column(unique = true)
+
     private String firstName;
     private String lastName;
-    @Column(unique = true)
+
     private String password;
     private boolean active;
     @Column(unique = true)
@@ -38,7 +38,7 @@ public class Utilisateur extends AbstractEntity implements UserDetails {
     private String telephone;
     private boolean isAdmin;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "ROLE_UTILISATEUR",
             joinColumns = {
                     @JoinColumn(name = "ID_UTILISATEUR")

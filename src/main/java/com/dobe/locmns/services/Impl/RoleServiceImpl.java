@@ -18,8 +18,9 @@ import java.util.Optional;
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository  roleRepository;
     private ObjectsValidator<RoleDto> validator;
-    @Transactional
+
     @Override
+    @Transactional
     public Integer save(RoleDto dto) {
         validator.validate(dto);
 
