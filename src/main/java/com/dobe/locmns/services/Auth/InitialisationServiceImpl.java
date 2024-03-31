@@ -28,6 +28,7 @@ public class InitialisationServiceImpl {
         Role userRole = createRoleIfNotFound(ROLE_USER);
 
         createUserIfNotFound("christian", "dobe", "christiandobe@hotmail.fr", "admin@pass", new HashSet<>(Arrays.asList(adminRole)));
+        createUserIfNotFound("come", "pina", "come@hotmail.fr", "user@pass", new HashSet<>(Arrays.asList(userRole)));
 
     }
 
@@ -56,6 +57,5 @@ public class InitialisationServiceImpl {
         }
         return role.get();
     }
-
 
 }
