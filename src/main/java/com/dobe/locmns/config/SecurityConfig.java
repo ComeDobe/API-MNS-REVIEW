@@ -56,6 +56,7 @@ public class SecurityConfig {
                                                 "/swagger-ui.html"
                                         )
                                         .permitAll()
+//                                        .antMatchers("/utilisateur/**").hasAuthority("ROLE_ADMIN")
                                         .anyRequest().authenticated()
                                         .and()
                                         .exceptionHandling()
@@ -75,6 +76,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public CorsFilter corsFilter() {

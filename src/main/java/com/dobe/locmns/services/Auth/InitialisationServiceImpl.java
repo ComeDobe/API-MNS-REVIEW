@@ -4,6 +4,8 @@ import com.dobe.locmns.models.Role;
 import com.dobe.locmns.models.Utilisateur;
 import com.dobe.locmns.repositories.RoleRepository;
 import com.dobe.locmns.repositories.UtilisateurRepository;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class InitialisationServiceImpl {
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String ROLE_USER = "ROLE_USER";
 
+    @PostConstruct
     public void initRoleAndUser() {
        Role adminRole = createRoleIfNotFound(ROLE_ADMIN);
         Role userRole = createRoleIfNotFound(ROLE_USER);
