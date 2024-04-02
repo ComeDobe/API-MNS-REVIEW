@@ -56,8 +56,8 @@ public class SecurityConfig {
                                                 "/swagger-ui.html"
                                         )
                                         .permitAll()
-//                                        .antMatchers("/utilisateur/**").hasAuthority("ROLE_ADMIN")
-                                        .anyRequest().authenticated()
+                                        .anyRequest()
+                                        .authenticated()
                                         .and()
                                         .exceptionHandling()
                                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)

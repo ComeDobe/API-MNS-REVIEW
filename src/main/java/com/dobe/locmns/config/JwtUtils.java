@@ -3,12 +3,16 @@ package com.dobe.locmns.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 
 
@@ -64,6 +68,13 @@ public class JwtUtils {
     public Boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+    public List<GrantedAuthority> getAuthorities(String token) {
+        final Claims claims = extractAllClaims(token);
+        return ((List<String>) claims.get("authorities")).stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
     }
 
 }
