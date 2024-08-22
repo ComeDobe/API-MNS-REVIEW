@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@AllArgsConstructor
 @RequestMapping("/pret")
 @Tag(name = "pret")
 public class PretController {
