@@ -89,7 +89,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return utilisateur.getId();
     }
     @Override
-    public Integer update(UtilisateurDto utilisateurDto, Integer localisationId) {
+    public Integer update(UtilisateurDto utilisateurDto) {
         Utilisateur utilisateur = UtilisateurDto.toEntity(utilisateurDto);
         return utilisateurRepository.save(utilisateur).getId();
     }

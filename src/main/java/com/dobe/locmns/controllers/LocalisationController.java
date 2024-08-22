@@ -1,17 +1,14 @@
 package com.dobe.locmns.controllers;
 
 import com.dobe.locmns.dto.LocalisationDto;
-import com.dobe.locmns.models.Localisation;
 import com.dobe.locmns.repositories.LocalisationRepository;
 import com.dobe.locmns.services.LocalisationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,7 +31,7 @@ public class LocalisationController {
 
     @PutMapping ("/{localisationId}")
         public ResponseEntity<Void> update(@RequestBody LocalisationDto localisationDto, @PathVariable Integer localisationId) {
-        localisationService.update(localisationDto, localisationId);
+        localisationService.update(localisationDto);
         return ResponseEntity.accepted().build();
     }
     @DeleteMapping("/{localisationId}")

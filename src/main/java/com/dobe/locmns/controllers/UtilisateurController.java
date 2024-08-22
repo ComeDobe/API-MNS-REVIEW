@@ -24,7 +24,7 @@ public class UtilisateurController {
     @PostMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Integer> save(@RequestBody UtilisateurDto utilisateurDto) {
-        return ResponseEntity.ok(utilisateurService.update(utilisateurDto, localisationId));
+        return ResponseEntity.ok(utilisateurService.update(utilisateurDto));
 
     }
     @GetMapping("/")

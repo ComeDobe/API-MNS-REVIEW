@@ -39,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public Integer update(RoleDto dto, Integer localisationId) {
+    public Integer update(RoleDto dto) {
         Role role = roleRepository.findById(dto.getId()).orElseThrow(() -> new EntityNotFoundException("No role found with the ID : " + dto.getId()));
         return roleRepository.save(RoleDto.toEntity(dto)).getId();
     }

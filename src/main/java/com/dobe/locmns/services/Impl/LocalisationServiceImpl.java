@@ -26,7 +26,7 @@ public class LocalisationServiceImpl implements LocalisationService {
     }
 
     @Override
-    public Integer update(LocalisationDto dto, Integer localisationId) {
+    public Integer update(LocalisationDto dto) {
         Localisation localisation = LocalisationDto.toEntity(dto);
         return localisationRepository.save(localisation).getId();
     }

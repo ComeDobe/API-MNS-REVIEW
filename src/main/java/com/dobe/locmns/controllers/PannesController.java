@@ -29,7 +29,7 @@ public class PannesController {
     }
     @PutMapping("")
     public ResponseEntity<Integer> update(@RequestBody PannesDto pannesDto) {
-        return ResponseEntity.ok(pannesService.update(pannesDto, localisationId));
+        return ResponseEntity.ok(pannesService.update(pannesDto));
 
     }
 @DeleteMapping("/{panneId}")

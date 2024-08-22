@@ -26,7 +26,7 @@ public class PretServiceImpl implements PretService {
     }
 
     @Override
-    public Integer update(PretDto dto, Integer localisationId) {
+    public Integer update(PretDto dto) {
         Pret pret = PretDto.toEntity(dto);
         return pretRepository.save(pret).getId();
     }
