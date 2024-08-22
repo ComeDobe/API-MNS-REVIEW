@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public Integer update(RoleDto dto) {
+    public Integer update(RoleDto dto, Integer localisationId) {
         Role role = roleRepository.findById(dto.getId()).orElseThrow(() -> new EntityNotFoundException("No role found with the ID : " + dto.getId()));
         return roleRepository.save(RoleDto.toEntity(dto)).getId();
     }
@@ -68,4 +67,8 @@ public class RoleServiceImpl implements RoleService {
         return null;
     }
 
+    @Override
+    public String createNewRole(String role) {
+        return roleRepository.save( Role.builder().roleName(role).build() ).getRoleName();
+    }
 }

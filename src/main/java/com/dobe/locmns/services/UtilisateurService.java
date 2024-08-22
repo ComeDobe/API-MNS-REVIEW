@@ -10,7 +10,7 @@ public interface UtilisateurService extends AbstractService<UtilisateurDto> {
     Integer invalidateUser(Integer id);
     Integer updatePassword(Integer id, String password);
     UtilisateurDto findById(Integer id);
-    Integer update(UtilisateurDto utilisateurDto);
+    Integer update(UtilisateurDto utilisateurDto, Integer localisationId);
     AuthenticationResponse register(UtilisateurDto utilisateurDto);
     AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest);
 

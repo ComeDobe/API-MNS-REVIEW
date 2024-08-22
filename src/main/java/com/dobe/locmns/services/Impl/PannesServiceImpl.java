@@ -25,7 +25,7 @@ public class PannesServiceImpl implements PannesService {
     }
 
     @Override
-    public Integer update(PannesDto dto) {
+    public Integer update(PannesDto dto, Integer localisationId) {
         Pannes pannes = PannesDto.toEntity(dto);
         return pannesRepository.save(pannes).getId();
     }

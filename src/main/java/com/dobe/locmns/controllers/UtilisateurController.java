@@ -1,12 +1,9 @@
 package com.dobe.locmns.controllers;
 
-import com.dobe.locmns.dto.Auth.AuthenticationRequest;
-import com.dobe.locmns.dto.Auth.AuthenticationResponse;
 import com.dobe.locmns.dto.UtilisateurDto;
 import com.dobe.locmns.repositories.UtilisateurRepository;
 import com.dobe.locmns.services.UtilisateurService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +24,7 @@ public class UtilisateurController {
     @PostMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Integer> save(@RequestBody UtilisateurDto utilisateurDto) {
-        return ResponseEntity.ok(utilisateurService.update(utilisateurDto));
+        return ResponseEntity.ok(utilisateurService.update(utilisateurDto, localisationId));
 
     }
     @GetMapping("/")

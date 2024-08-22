@@ -32,7 +32,7 @@ public class MaterielController {
     }
     @PutMapping("")
     public ResponseEntity<Integer> update(@RequestBody MaterielDto materielDto) {
-        return ResponseEntity.ok(materielService.update(materielDto));
+        return ResponseEntity.ok(materielService.update(materielDto, localisationId));
 
     }
     @GetMapping("/{materielId}")

@@ -27,7 +27,7 @@ public class MaterielServiceImpl implements MaterielService {
     }
 
     @Override
-    public Integer update(MaterielDto dto) {
+    public Integer update(MaterielDto dto, Integer localisationId) {
         Materiel materiel = MaterielDto.toEntity(dto);
         return materielRepositroy.save(materiel).getId();
     }
