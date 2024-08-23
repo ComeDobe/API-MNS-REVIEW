@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,8 +23,9 @@ public class JwtUtils {
     private String SECRET_KEY = "cf1e1f18f05b6b3e0cf1ccd2b62e0d133b1f3ce0b176a60dd7b091fe0e248205";
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim(token, claims -> claims.get("email", String.class));
     }
+
 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
@@ -40,8 +42,17 @@ public class JwtUtils {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        try {
+            Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+            System.out.println("Revendications extraites : " + claims);
+            return claims;
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'extraction des revendications du token : " + e.getMessage());
+            return null;
+        }
     }
+
+
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
@@ -57,7 +68,8 @@ public class JwtUtils {
     }
 
     private String createToken(Map<String, Object> claims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(claims)
+        return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .claim("authorities", userDetails.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
