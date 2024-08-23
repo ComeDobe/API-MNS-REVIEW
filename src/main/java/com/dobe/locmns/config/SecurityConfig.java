@@ -30,6 +30,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -53,14 +54,17 @@ public class SecurityConfig {
                                                 "/configuration/security",
                                                 "/swagger-ui/**",
                                                 "/webjars/**",
-                                                "/swagger-ui.html"
+                                                "/swagger-ui.html",
+                                                "/error"
                                         )
                                         .permitAll()
+                                        .requestMatchers("/utilisateur/**").hasRole("ADMIN")
                                         .anyRequest()
                                         .authenticated()
                                         .and()
                                         .exceptionHandling()
                                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                                        .accessDeniedHandler(customAccessDeniedHandler)
                                         .and()
                                         .sessionManagement()
                                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -83,7 +87,7 @@ public class SecurityConfig {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://locahost:5300/node"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:9091"));
         config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         source.registerCorsConfiguration("/**", config);
