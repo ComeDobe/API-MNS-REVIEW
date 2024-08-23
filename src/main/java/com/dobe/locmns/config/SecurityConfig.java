@@ -58,7 +58,7 @@ public class SecurityConfig {
                                                 "/error"
                                         )
                                         .permitAll()
-                                        .requestMatchers("/utilisateur/**").hasRole("ADMIN")
+//                                        .requestMatchers("/utilisateur/**").hasRole("ADMIN")
                                         .anyRequest()
                                         .authenticated()
                                         .and()
