@@ -19,8 +19,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(RequestLoggingFilter.class);
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         logger.info("Processing request: {} {}", request.getMethod(), request.getRequestURI());
         logger.info("Authorization header: {}", request.getHeader("Authorization"));
         filterChain.doFilter(request, response);

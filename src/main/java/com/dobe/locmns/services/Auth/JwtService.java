@@ -29,9 +29,7 @@ public class JwtService implements UserDetailsService {
     private final UtilisateurRepository utilisateurRepository;
     private final AuthenticationManager authenticationManager;
 
-    public JwtService(JwtUtils jwtUtils,
-                      UtilisateurRepository utilisateurRepository,
-                      AuthenticationManager authenticationManager) {
+    public JwtService(JwtUtils jwtUtils, UtilisateurRepository utilisateurRepository, AuthenticationManager authenticationManager) {
         this.jwtUtils = jwtUtils;
         this.utilisateurRepository = utilisateurRepository;
         this.authenticationManager = authenticationManager;
@@ -74,10 +72,7 @@ public class JwtService implements UserDetailsService {
         Set<SimpleGrantedAuthority> authorities = getAuthority(utilisateur);
         logger.info("User found with authorities: {}", authorities);
 
-        return new User(
-                utilisateur.getEmail(),
-                utilisateur.getPassword(),
-                authorities
+        return new User(utilisateur.getEmail(), utilisateur.getPassword(), authorities
         );
     }
 

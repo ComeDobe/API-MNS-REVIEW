@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -32,17 +33,13 @@ public class JwtUtils {
     public String getUsernameFromToken(String token) {
         try {
             Claims claims = getAllClaimsFromToken(token);
-            if (claims.get("email") != null) {
-                return claims.get("email", String.class);
-            }
-            if (claims.getSubject() != null) {
-                return claims.getSubject();
-            }
-            if (claims.get("roles") != null) {
-                return claims.get("roles", String.class);
-            }
-            logger.warn("Aucun identifiant utilisateur trouvé dans le token");
-            return null;
+            return Optional.ofNullable(claims.get("email", String.class))
+                    .or(() -> Optional.ofNullable(claims.getSubject()))
+                    .or(() -> Optional.ofNullable(claims.get("roles", String.class)))
+                    .orElseGet(() -> {
+                        logger.warn("Aucun identifiant utilisateur trouvé dans le token");
+                        return null;
+                    });
         } catch (Exception e) {
             logger.error("Erreur lors de l'extraction de l'username du token", e);
             return null;
@@ -84,7 +81,10 @@ public class JwtUtils {
         Utilisateur utilisateur = (Utilisateur) userDetails;
         Map<String, Object> claims = new HashMap<>(extraClaims);
         claims.put("email", utilisateur.getEmail());
-        claims.put("roles", utilisateur.getRole().stream().map(Role::getRoleName).collect(Collectors.toList()));
+        claims.put("roles", utilisateur
+                .getRole().stream()
+                .map(Role::getRoleName)
+                .collect(Collectors.toList()));
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(utilisateur.getId().toString())
@@ -93,9 +93,6 @@ public class JwtUtils {
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
     }
-
-
-
     public String generateToken(UserDetails userDetails) {
         return generateToken(userDetails, new HashMap<>());
     }

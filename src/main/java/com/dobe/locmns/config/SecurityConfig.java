@@ -2,8 +2,8 @@ package com.dobe.locmns.config;
 
 import com.dobe.locmns.repositories.UtilisateurRepository;
 import com.dobe.locmns.services.Auth.JwtService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -11,7 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,56 +29,30 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-
-    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final JwtUtils jwtUtils;
     private final UtilisateurRepository utilisateurRepository;
-    private final JwtService jwtService;
     private final RequestLoggingFilter requestLoggingFilter;
-
-    public SecurityConfig(UserDetailsService userDetailsService,
-                          JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-                          CustomAccessDeniedHandler customAccessDeniedHandler,
-                          JwtUtils jwtUtils,
-                          UtilisateurRepository utilisateurRepository,
-                          @Lazy JwtService jwtService,
-                          RequestLoggingFilter requestLoggingFilter) {
-        this.userDetailsService = userDetailsService;
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.customAccessDeniedHandler = customAccessDeniedHandler;
-        this.jwtUtils = jwtUtils;
-        this.utilisateurRepository = utilisateurRepository;
-        this.jwtService = jwtService;
-        this.requestLoggingFilter = requestLoggingFilter;
-    }
+    @Lazy
+    @Autowired
+    private JwtService jwtService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        logger.info("Configuring SecurityFilterChain");
-
         http
-                .csrf().disable()
-                .cors().and()
-                .exceptionHandling()
-                .authenticationEntryPoint((request, response, authException) -> {
-                    logger.error("Unauthorized error: {}", authException.getMessage());
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
-                })
-                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    logger.error("Access denied error: {}", accessDeniedException.getMessage());
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Error: Access Denied");
-                })
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests(requests -> {
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(customAccessDeniedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(requests -> {
                     try {
                         requests
                                 .requestMatchers(
@@ -100,16 +74,13 @@ public class SecurityConfig {
                                 ).permitAll()
                                 .requestMatchers("/utilisateur/**").hasAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated();
-                        logger.info("Security rules configured successfully");
                     } catch (Exception e) {
-                        logger.error("Error configuring security rules: ", e);
                     }
                 })
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(requestLoggingFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        logger.info("SecurityFilterChain configuration completed");
         return http.build();
     }
 
@@ -126,13 +97,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(jwtUtils, utilisateurRepository, jwtService);
+        return new JwtAuthenticationFilter(jwtUtils,  jwtService);
     }
 
     @Bean
@@ -147,4 +118,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
