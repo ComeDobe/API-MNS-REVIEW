@@ -1,6 +1,9 @@
 package com.dobe.locmns.config;
 
+import com.dobe.locmns.repositories.UtilisateurRepository;
+import com.dobe.locmns.services.Auth.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +30,7 @@ import java.util.Arrays;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 
 public class SecurityConfig {
-    private final UserDetailsService userDetailsService;
+    private final   UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
@@ -97,8 +100,14 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtils jwtUtils, UtilisateurRepository utilisateurRepository, JwtService jwtService) {
+        return new JwtAuthenticationFilter(jwtUtils, utilisateurRepository, jwtService);
+    }
+
 
     @Bean
+
     AuthenticationProvider authenticationProvider () {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
