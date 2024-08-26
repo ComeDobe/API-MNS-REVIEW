@@ -26,7 +26,6 @@ public class JwtUtils {
 
     @Value("${jwt.secret}")
     private String SECRET_KEY;
-
     @Value("${jwt.token-validity}")
     private long TOKEN_VALIDITY;
 
