@@ -53,8 +53,8 @@ public class ReservationController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<Integer> validateReservation(@RequestBody ReservationDto reservationDto) {
-        return ResponseEntity.ok(reservationService.validateReservation(reservationDto));
+    public ResponseEntity<Integer> validateReservation(@RequestBody Integer id) {
+        return ResponseEntity.ok(reservationService.validateReservation(id));
     }
 
     @PostMapping("/invalidate/{id}")

@@ -25,6 +25,7 @@ public class Reservation extends AbstractEntity{
     private  Integer quantite;
     private String motifPret;
     private boolean validate;
+    private boolean ProlongationValidee;
     @ManyToOne
     @JoinColumn(name = "Id_Materiel")
     private Materiel materiel;

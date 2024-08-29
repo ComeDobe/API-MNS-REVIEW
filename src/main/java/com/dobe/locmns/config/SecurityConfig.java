@@ -2,6 +2,7 @@ package com.dobe.locmns.config;
 
 import com.dobe.locmns.repositories.UtilisateurRepository;
 import com.dobe.locmns.services.Auth.JwtService;
+import com.dobe.locmns.services.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,6 +41,7 @@ public class SecurityConfig {
     private final JwtUtils jwtUtils;
     private final UtilisateurRepository utilisateurRepository;
     private final RequestLoggingFilter requestLoggingFilter;
+
     @Lazy
     @Autowired
     private JwtService jwtService;
@@ -118,5 +120,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 }

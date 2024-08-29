@@ -41,9 +41,11 @@ INSERT INTO `role_utilisateur` (`id_role`, `id_utilisateur`) VALUES
 (3, 3), (4, 4), (5, 5);
 
 -- Insertion dans la table reservation
-INSERT INTO `reservation` (`date_debut`, `date_fin`, `date_retour`, `id_materiel`, `id_utilisateur`, `quantite`, `validate`, `created_date`, `last_modified_date`, `motif_pret`) VALUES
-('2024-09-01', '2024-09-15', NULL, 1, 3, 1, b'1', '2024-08-29 16:00:00', NULL, 'Projet de recherche'),
-('2024-09-02', '2024-09-16', NULL, 2, 4, 1, b'1', '2024-08-29 16:01:00', NULL, 'Présentation en classe'),
-('2024-09-03', '2024-09-17', NULL, 3, 5, 1, b'0', '2024-08-29 16:02:00', NULL, 'Formation'),
-('2024-09-04', '2024-09-18', NULL, 4, 3, 5, b'1', '2024-08-29 16:03:00', NULL, 'Aménagement bureau'),
-('2024-09-05', '2024-09-19', NULL, 5, 4, 1, b'0', '2024-08-29 16:04:00', NULL, 'Projet étudiant');
+INSERT INTO `reservation` (`date_debut`, `date_fin`, `date_retour`, `id_materiel`, `id_utilisateur`, `quantite`, `validate`, `Prolongation_Validee`, `created_date`, `last_modified_date`, `motif_pret`) VALUES
+('2024-09-01', '2024-09-15', NULL, 1, 3, 1, b'1', b'0', '2024-08-29 16:00:00', NULL, 'Projet de recherche'),
+('2024-09-02', '2024-09-16', NULL, 2, 4, 1, b'1', b'1', '2024-08-29 16:01:00', NULL, 'Présentation en classe'),
+('2024-09-03', '2024-09-17', NULL, 3, 5, 1, b'0', b'0', '2024-08-29 16:02:00', NULL, 'Formation'),
+('2024-09-04', '2024-09-18', NULL, 4, 3, 5, b'1', b'1', '2024-08-29 16:03:00', NULL, 'Aménagement bureau'),
+('2024-09-05', '2024-09-19', NULL, 5, 4, 1, b'0', b'0', '2024-08-29 16:04:00', NULL, 'Projet étudiant');
+
+

@@ -2,12 +2,14 @@ package com.dobe.locmns.services.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class EmailService {
     private final JavaMailSender javaMailSender;
     private final String email;
@@ -17,7 +19,7 @@ public class EmailService {
         this.email = email;
     }
 
-    public void sendConfirmationEmail(String utilisateur, String Email) {
+    public void sendConfirmationEmail(String utilisateur, String Email, String messageUser) {
         String subject = "Confirmation de demande de prêt de matériel";
         String message = "Une nouvelle demande de prêt de matériel a été effectuée par l'utilisateur : \n" +
                 "Nom : " + utilisateur + "\n" +
