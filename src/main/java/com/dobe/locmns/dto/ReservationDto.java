@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,9 +15,9 @@ import lombok.Setter;
 public class ReservationDto {
 
         private Integer id;
-        private String dateDebut;
-        private String dateFin;
-        private String dateRetour;
+        private LocalDate dateDebut;
+        private LocalDate dateFin;
+        private  LocalDate dateRetour;
         private Integer quantite;
         private String motifPret;
         private MaterielDto materiel;

@@ -62,17 +62,17 @@ INSERT INTO `utilisateur` (`active`, `is_admin`, `created_date`, `last_modified_
 (b'1', b'0', '2024-08-27 19:07:00', NULL, '258 Rue du Bac', 'chloe.simon@email.com', 'Chloé', 'Simon', '$2a$10$vwx234', '1470258369');
 
 -- Insertion dans la table pret
-INSERT INTO `pret` (`date_debut`, `date_fin`, `id_materiel`, `id_utilisateur`, `prolongation_valide`, `quantite`, `created_date`, `last_modified_date`, `description`) VALUES
-('2024-09-01', '2024-09-15', 1, 1, b'0', 1, '2024-08-27 17:00:00', NULL, 'Prêt pour projet'),
-('2024-09-02', '2024-09-16', 2, 2, b'0', 1, '2024-08-27 17:01:00', NULL, 'Présentation'),
-('2024-09-03', '2024-09-17', 3, 1, b'1', 1, '2024-08-27 17:02:00', NULL, 'Cours interactif'),
-('2024-09-04', '2024-09-18', 4, 2, b'0', 5, '2024-08-27 17:03:00', NULL, 'Aménagement bureau'),
-('2024-09-05', '2024-09-19', 5, 1, b'0', 1, '2024-08-27 17:04:00', NULL, 'Prototype'),
-('2024-09-06', '2024-09-20', 6, 2, b'1', 1, '2024-08-27 17:05:00', NULL, 'Recherche'),
-('2024-09-07', '2024-09-21', 7, 1, b'0', 1, '2024-08-27 17:06:00', NULL, 'Numérisation documents'),
-('2024-09-08', '2024-09-22', 8, 2, b'0', 2, '2024-08-27 17:07:00', NULL, 'Formation VR'),
-('2024-09-09', '2024-09-23', 9, 1, b'1', 1, '2024-08-27 17:08:00', NULL, 'Cours de dessin'),
-('2024-09-10', '2024-09-24', 10, 2, b'0', 1, '2024-08-27 17:09:00', NULL, 'Test de charge');
+-- INSERT INTO `pret` (`date_debut`, `date_fin`, `id_materiel`, `id_utilisateur`, `prolongation_valide`, `quantite`, `created_date`, `last_modified_date`, `description`) VALUES
+-- ('2024-09-01', '2024-09-15', 1, 1, b'0', 1, '2024-08-27 17:00:00', NULL, 'Prêt pour projet'),
+-- ('2024-09-02', '2024-09-16', 2, 2, b'0', 1, '2024-08-27 17:01:00', NULL, 'Présentation'),
+-- ('2024-09-03', '2024-09-17', 3, 1, b'1', 1, '2024-08-27 17:02:00', NULL, 'Cours interactif'),
+-- ('2024-09-04', '2024-09-18', 4, 2, b'0', 5, '2024-08-27 17:03:00', NULL, 'Aménagement bureau'),
+-- ('2024-09-05', '2024-09-19', 5, 1, b'0', 1, '2024-08-27 17:04:00', NULL, 'Prototype'),
+-- ('2024-09-06', '2024-09-20', 6, 2, b'1', 1, '2024-08-27 17:05:00', NULL, 'Recherche'),
+-- ('2024-09-07', '2024-09-21', 7, 1, b'0', 1, '2024-08-27 17:06:00', NULL, 'Numérisation documents'),
+-- ('2024-09-08', '2024-09-22', 8, 2, b'0', 2, '2024-08-27 17:07:00', NULL, 'Formation VR'),
+-- ('2024-09-09', '2024-09-23', 9, 1, b'1', 1, '2024-08-27 17:08:00', NULL, 'Cours de dessin'),
+-- ('2024-09-10', '2024-09-24', 10, 2, b'0', 1, '2024-08-27 17:09:00', NULL, 'Test de charge');
 
 -- Insertion dans la table role_utilisateur
 INSERT INTO `role_utilisateur` (`id_role`, `id_utilisateur`) VALUES

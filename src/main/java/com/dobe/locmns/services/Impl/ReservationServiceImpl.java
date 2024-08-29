@@ -30,7 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
     public Integer validateReservation(ReservationDto dto) {
         validator.validate(dto);
         Reservation reservation = ReservationDto.toEntity(dto);
-        reservation.setValidated(true);
+        reservation.setValidate(true);
         return reservationRepository.save(reservation).getId();
     }
 
@@ -39,7 +39,7 @@ public class ReservationServiceImpl implements ReservationService {
     public Integer invalidateReservation(Integer id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Réservation non trouvée"));
-        reservation.setValidated(false);
+        reservation.setValidate(false);
         return reservationRepository.save(reservation).getId();
     }
     @Override

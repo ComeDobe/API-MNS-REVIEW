@@ -3,23 +3,22 @@ package com.dobe.locmns.controllers;
 
 import com.dobe.locmns.dto.MaterielDto;
 import com.dobe.locmns.services.MaterielService;
-import com.dobe.locmns.services.PretService;
+import com.dobe.locmns.services.ReservationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @AllArgsConstructor
 @RequestMapping("/materiel")
 @Tag(name = "materiel")
 public class MaterielController {
 
     private final MaterielService materielService;
-    private final PretService pretService;
+    private final ReservationService reservationService;
 
     @PostMapping("")
     public ResponseEntity<Integer> save(@RequestBody MaterielDto materielDto) {

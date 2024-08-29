@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -17,11 +19,12 @@ public class Reservation extends AbstractEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Reservation")
     private Integer id;
-    private String dateDebut;
-    private String dateFin;
-    private String dateRetour;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
+    private LocalDate dateRetour;
     private  Integer quantite;
     private String motifPret;
+    private boolean validate;
     @ManyToOne
     @JoinColumn(name = "Id_Materiel")
     private Materiel materiel;
@@ -30,6 +33,5 @@ public class Reservation extends AbstractEntity{
     private Utilisateur utilisateur;
 
 
-    public void setValidated(boolean b) {
-    }
+
 }
