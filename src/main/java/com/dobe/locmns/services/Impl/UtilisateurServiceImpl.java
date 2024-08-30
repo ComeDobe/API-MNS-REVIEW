@@ -126,7 +126,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
 
-
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(request.getEmail())

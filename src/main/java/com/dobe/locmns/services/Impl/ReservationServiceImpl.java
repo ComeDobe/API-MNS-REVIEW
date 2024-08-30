@@ -66,12 +66,13 @@ public class ReservationServiceImpl implements ReservationService {
         }
         materielDto.setQuantite(materielDto.getQuantite() - dto.getQuantite());
         materielService.update(materielDto);
+
         Reservation reservation = new Reservation();
         updateReservationFromDto(reservation, dto);
         reservation.setValidate(false);
         Integer reservationId = reservationRepository.save(reservation).getId();
 
-        sendConfirmationEmail(dto, reservationId, materielDto);
+        sendUserConfirmationEmail(dto, reservationId, materielDto);
         sendAdminNotificationEmail(dto, reservationId, materielDto);
 
         return reservationId;
@@ -87,7 +88,6 @@ public class ReservationServiceImpl implements ReservationService {
 
         emailService.sendConfirmationEmail(adminEmail, "Nouvelle réservation", messageAdmin);
     }
-
 
     @Override
     @Transactional
@@ -128,7 +128,7 @@ public class ReservationServiceImpl implements ReservationService {
         updateReservationFromDto(reservation, reservationDto);
         Integer reservationId = reservationRepository.save(reservation).getId();
 
-        sendConfirmationEmail(reservationDto, reservationId, materielDto);
+        sendUserConfirmationEmail(reservationDto, reservationId, materielDto);
 
         return reservationId;
     }
@@ -157,12 +157,12 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setUtilisateur(UtilisateurDto.toEntity(dto.getUtilisateur()));
     }
 
-    private void sendConfirmationEmail(ReservationDto reservationDto, Integer reservationId, MaterielDto materielDto) {
-        String messageUser = "Cher utilisateur,\n\nVotre demande de reservation a été confirmée. " +
+    private void sendUserConfirmationEmail(ReservationDto reservationDto, Integer reservationId, MaterielDto materielDto) {
+        String messageUser = "Cher utilisateur,\n\nVotre demande de réservation a été confirmée. " +
                 "Nous vous contacterons bientôt pour organiser les détails du prêt." +
                 "\n\nDétails du matériel :\n" +
                 "Identifiant du Materiel : " + materielDto.getId() + "\n" +
-                "Identifiant du Pret : " + reservationId + "\n" +
+                "Identifiant du Prêt : " + reservationId + "\n" +
                 "Référence : " + materielDto.getReference() + "\n" +
                 "Description : " + materielDto.getDescription() + "\n";
 
