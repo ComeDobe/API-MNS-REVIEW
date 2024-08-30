@@ -60,8 +60,34 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public Integer save(ReservationDto dto) {
         validator.validate(dto);
-        return createReservation(dto);
+        MaterielDto materielDto = materielService.findById(dto.getMateriel().getId());
+        if (materielDto.getQuantite() < dto.getQuantite()) {
+            throw new IllegalArgumentException("La quantité demandée est supérieure à la quantité disponible");
+        }
+        materielDto.setQuantite(materielDto.getQuantite() - dto.getQuantite());
+        materielService.update(materielDto);
+        Reservation reservation = new Reservation();
+        updateReservationFromDto(reservation, dto);
+        reservation.setValidate(false);
+        Integer reservationId = reservationRepository.save(reservation).getId();
+
+        sendConfirmationEmail(dto, reservationId, materielDto);
+        sendAdminNotificationEmail(dto, reservationId, materielDto);
+
+        return reservationId;
     }
+
+    private void sendAdminNotificationEmail(ReservationDto reservationDto, Integer reservationId, MaterielDto materielDto) {
+        String adminEmail = "autorisation.loc@gmail.com";
+        String messageAdmin = "Une nouvelle réservation a été créée :\n" +
+                "Identifiant de la Réservation : " + reservationId + "\n" +
+                "Utilisateur : " + reservationDto.getUtilisateur().getFirstName() + " " + reservationDto.getUtilisateur().getLastName() + "\n" +
+                "Matériel : " + materielDto.getReference() + "\n" +
+                "Quantité : " + reservationDto.getQuantite();
+
+        emailService.sendConfirmationEmail(adminEmail, "Nouvelle réservation", messageAdmin);
+    }
+
 
     @Override
     @Transactional

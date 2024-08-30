@@ -41,10 +41,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public List<UtilisateurDto> findAll() {
-       return utilisateurRepository.findAll()
-               .stream()
-               .map(UtilisateurDto::fromEntity)
-               .collect(Collectors.toList());
+        return utilisateurRepository.findAll()
+                .stream()
+                .map(UtilisateurDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -53,6 +53,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 .map(UtilisateurDto::fromEntity)
                 .orElseThrow(() -> new EntityNotFoundException("Aucun utilisateur trouvé avec cet Id: " + id));
     }
+
+
 
     @Override
     public Void delete(Integer id) {

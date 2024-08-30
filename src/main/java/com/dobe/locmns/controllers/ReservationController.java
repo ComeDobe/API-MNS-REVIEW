@@ -1,9 +1,12 @@
 package com.dobe.locmns.controllers;
 
 import com.dobe.locmns.dto.ReservationDto;
+import com.dobe.locmns.dto.UtilisateurDto;
 import com.dobe.locmns.models.Utilisateur;
 import com.dobe.locmns.repositories.ReservationRepository;
+import com.dobe.locmns.services.MaterielService;
 import com.dobe.locmns.services.ReservationService;
+import com.dobe.locmns.services.UtilisateurService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,15 +25,27 @@ public class ReservationController {
 
     private final ReservationService reservationService;
     private final ReservationRepository reservationRepository;
+    private final MaterielService materielService;
+    private final UtilisateurService utilisateurService;
 
-    @PostMapping
-    public ResponseEntity<Integer> createReservation(@RequestBody ReservationDto reservationDto, Authentication authentication) {
+    @PostMapping("/reserve/{materielId}")
+    public ResponseEntity<Integer> reserveMateriel(@PathVariable int materielId, @RequestBody ReservationDto reservationDto, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(1);
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.save(reservationDto));
+        String email = userDetails.getUsername();
+
+        try {
+            reservationDto.getMateriel().setId(materielId);
+            UtilisateurDto utilisateur = utilisateurService.findById(Integer.valueOf(email));
+            reservationDto.setUtilisateur(utilisateur);
+
+            Integer reservationId = reservationService.save(reservationDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(reservationId);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
-    @GetMapping
+
+    @GetMapping("")
     public ResponseEntity<List<ReservationDto>> getAllReservations() {
         return ResponseEntity.ok(reservationService.findAll());
     }

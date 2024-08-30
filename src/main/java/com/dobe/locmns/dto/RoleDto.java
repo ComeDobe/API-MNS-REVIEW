@@ -14,27 +14,32 @@ import lombok.Setter;
 public class RoleDto {
 
     private Integer id;
-    @NotBlank(message = "Le roleName ne peut pas etre vide")
+    @NotBlank(message = "Le nom du rôle ne doit pas être vide")
     private String roleName;
-    @NotBlank(message = "La description ne peut pas etre vide")
+    @NotBlank(message = "La description du rôle ne doit pas être vide")
     private String roleDescription;
-
     public static RoleDto fromEntity(Role role) {
+        if (role == null) {
+            return null;
+        }
+
         return RoleDto.builder()
                 .id(role.getId())
                 .roleName(role.getRoleName())
                 .roleDescription(role.getRoleDescription())
                 .build();
     }
-    public static Role toEntity(RoleDto roleDto) {
-        Role.RoleBuilder roleBuilder = Role.builder()
-                .roleName(roleDto.getRoleName())
-                .roleDescription(roleDto.getRoleDescription());
 
-        if (roleDto.getId() != null) {
-            roleBuilder.id(roleDto.getId());
+    public static Role toEntity(RoleDto roleDto) {
+        if (roleDto == null) {
+            return null;
         }
 
-        return roleBuilder.build();
+        Role role = new Role();
+        role.setId(roleDto.getId());
+        role.setRoleName(roleDto.getRoleName());
+        role.setRoleDescription(roleDto.getRoleDescription());
+
+        return role;
     }
 }
