@@ -8,6 +8,7 @@ import com.dobe.locmns.services.MaterielService;
 import com.dobe.locmns.services.ReservationService;
 import com.dobe.locmns.services.UtilisateurService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,15 +36,18 @@ public class ReservationController {
 
         try {
             reservationDto.getMateriel().setId(materielId);
-            UtilisateurDto utilisateur = utilisateurService.findById(Integer.valueOf(email));
+            UtilisateurDto utilisateur = utilisateurService.findByEmail(email);
             reservationDto.setUtilisateur(utilisateur);
 
             Integer reservationId = reservationService.save(reservationDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(reservationId);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
 
     @GetMapping("")
     public ResponseEntity<List<ReservationDto>> getAllReservations() {

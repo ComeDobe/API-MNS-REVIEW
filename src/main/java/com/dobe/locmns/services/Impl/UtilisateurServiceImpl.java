@@ -149,6 +149,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 .build();
     }
 
+    @Override
+    public UtilisateurDto findByEmail(String email) {
+        validator.validateEmail(email);
+        return utilisateurRepository.findByEmail(email)
+                .map(UtilisateurDto::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("Aucun utilisateur trouvé avec cet email: " + email));
+    }
+
 
     private Role findOrCreateRole(String roleName) {
         Optional<Role> role = roleRepository.findByRoleName(roleName);
