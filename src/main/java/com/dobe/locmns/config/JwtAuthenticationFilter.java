@@ -1,5 +1,3 @@
-
-
 package com.dobe.locmns.config;
 
 import com.dobe.locmns.services.Auth.JwtService;
